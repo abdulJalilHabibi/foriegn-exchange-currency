@@ -29,14 +29,14 @@ export default function DropDown({
           {/* FAVORITES number */}
           {selectedTitle === "FAVORITES" && (
             <span className="flex justify-center bg-[#283300] text-[#cef739] items-center w-7 h-7 rounded-full">
-              10
+              {favorited.length}
             </span>
           )}
 
           {/* LOG number */}
           {selectedTitle === "LOG" && (
             <span className="flex justify-center bg-[#283300] text-[#cef739] items-center w-7 h-7 rounded-full">
-              8
+              {logged.length}
             </span>
           )}
         </span>

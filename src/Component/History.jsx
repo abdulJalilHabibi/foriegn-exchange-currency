@@ -60,56 +60,65 @@ export default function History({ currency }) {
   const open = historyRate[0]?.rate;
   const last = historyRate[historyRate.length - 1]?.rate;
 
-  const change = last - open;
-  const percentageChange = (change / open) * 100;
+  const change = open !== undefined && last !== undefined ? last - open : 0;
+
+  const percentageChange = open && open !== 0 ? (change / open) * 100 : 0;
 
   return (
-    <div className="pb-4 lg:w-[1036px]">
+    <div className="w-full min-w-0 max-w-full pb-4 lg:w-[1036px]">
       {isLoading ? (
         <HistoryLoading />
       ) : error ? (
-        <Error />
+        <div className="text-white">Something went wrong.</div>
       ) : (
         <>
           {/* ================= TOP SECTION ================= */}
 
-          <div className="lg:flex items-center justify-between">
+          <div className="w-full min-w-0">
             {/* ================= CARDS ================= */}
 
-            <div className="grid grid-cols-2 gap-3 mt-4 md:flex md:gap-5">
+            <div className="mt-4 grid w-full min-w-0 grid-cols-2 gap-3 md:flex md:gap-5">
               {/* OPEN */}
-              <div className="flex flex-col gap-2 font-jetbrains bg-[black] md:bg-[#171719] w-41.5 h-20.25 md:w-[145px] px-5 py-2 rounded-2xl">
-                <span className="text-[#b2b2b2] tracking-wider">OPEN</span>
+              <div className="flex h-20 min-w-0 w-full flex-col gap-2 rounded-2xl bg-black px-4 py-2 font-jetbrains md:w-[145px] md:bg-[#171719]">
+                <span className="tracking-wider text-[#b2b2b2]">OPEN</span>
 
-                <p className="text-white tracking-[1px] text-[20px]">{open}</p>
+                <p className="truncate text-[20px] tracking-[1px] text-white">
+                  {open ?? "-"}
+                </p>
               </div>
 
               {/* LAST */}
-              <div className="flex flex-col gap-2 font-jetbrains bg-[black] md:bg-[#171719] w-41.5 h-20.25 md:w-[145px] px-5 py-2 rounded-2xl">
-                <span className="text-[#b2b2b2] tracking-wider">LAST</span>
+              <div className="flex h-20 min-w-0 w-full flex-col gap-2 rounded-2xl bg-black px-4 py-2 font-jetbrains md:w-[145px] md:bg-[#171719]">
+                <span className="tracking-wider text-[#b2b2b2]">LAST</span>
 
-                <p className="text-white tracking-[1px] text-[20px]">{last}</p>
+                <p className="truncate text-[20px] tracking-[1px] text-white">
+                  {last ?? "-"}
+                </p>
               </div>
 
               {/* CHANGE */}
-              <div className="flex flex-col gap-2 font-jetbrains md:bg-[#171719] bg-[black] w-41.5 h-20.25 md:w-[145px] px-5 py-2 rounded-2xl">
-                <span className="text-[#b2b2b2] tracking-wider">CHANGE</span>
+              <div className="flex h-20 min-w-0 w-full flex-col gap-2 rounded-2xl bg-black px-4 py-2 font-jetbrains md:w-[145px] md:bg-[#171719]">
+                <span className="tracking-wider text-[#b2b2b2]">CHANGE</span>
 
-                <p className="text-[#42eb05] tracking-[1px] text-[18px]">
+                <p className="truncate text-[18px] tracking-[1px] text-[#42eb05]">
                   {change.toFixed(5)}
                 </p>
               </div>
 
               {/* % CHANGE */}
-              <div className="flex flex-col gap-2 font-jetbrains bg-[black] md:bg-[#171719] w-41.5 h-20.25 md:w-[145px] px-5 py-2 rounded-2xl">
-                <span className="text-[#b2b2b2] tracking-wider">% CHANGE</span>
+              <div className="flex h-20 min-w-0 w-full flex-col gap-2 rounded-2xl bg-black px-4 py-2 font-jetbrains md:w-[145px] md:bg-[#171719]">
+                <span className="tracking-wider text-[#b2b2b2]">% CHANGE</span>
 
                 <p
-                  className={` w-100 ${
-                    percentageChange > 0 ? "text-[#42eb05]" : "text-[#ff4141]"
-                  } tracking-wide text-[16px]`}
+                  className={`truncate tracking-wide text-[16px] ${
+                    percentageChange > 0
+                      ? "text-[#42eb05]"
+                      : percentageChange < 0
+                        ? "text-[#ff4141]"
+                        : "text-[#42eb05]"
+                  }`}
                 >
-                  {percentageChange > 0 ? "▲" : "▼"}{" "}
+                  {percentageChange > 0 ? "▲" : percentageChange < 0 ? "▼" : ""}{" "}
                   {percentageChange.toFixed(5)}%
                 </p>
               </div>
@@ -117,136 +126,108 @@ export default function History({ currency }) {
 
             {/* ================= TIME RANGE ================= */}
 
-            <div className="flex items-center justify-around rounded-lg mt-6 w-71.5 h-10.25 p-2 text-[14px] text-[#b2b2b2] bg-[black] md:bg-[#171719]">
-              <span
-                className={
-                  historyDate === "1D"
-                    ? "bg-[#3d3d3d] py-2 px-3 text-white rounded-lg"
-                    : "cursor-pointer"
-                }
-                onClick={() => setHistoryDate("1D")}
-              >
-                1D
-              </span>
-
-              <span
-                className={
-                  historyDate === "1W"
-                    ? "bg-[#3d3d3d] py-2 px-3 text-white rounded-lg"
-                    : "cursor-pointer"
-                }
-                onClick={() => setHistoryDate("1W")}
-              >
-                1W
-              </span>
-
-              <span
-                className={
-                  historyDate === "1M"
-                    ? "bg-[#3d3d3d] py-2 px-3 text-white rounded-lg"
-                    : "cursor-pointer"
-                }
-                onClick={() => setHistoryDate("1M")}
-              >
-                1M
-              </span>
-
-              <span
-                className={
-                  historyDate === "3M"
-                    ? "bg-[#3d3d3d] py-2 px-3 text-white rounded-lg"
-                    : "cursor-pointer"
-                }
-                onClick={() => setHistoryDate("3M")}
-              >
-                3M
-              </span>
-
-              <span
-                className={
-                  historyDate === "1Y"
-                    ? "bg-[#3d3d3d] py-2 px-3 text-white rounded-lg"
-                    : "cursor-pointer"
-                }
-                onClick={() => setHistoryDate("1Y")}
-              >
-                1Y
-              </span>
-
-              <span
-                className={
-                  historyDate === "5Y"
-                    ? "bg-[#3d3d3d] py-2 px-3 text-white rounded-lg"
-                    : "cursor-pointer"
-                }
-                onClick={() => setHistoryDate("5Y")}
-              >
-                5Y
-              </span>
+            <div className="mt-6 flex h-10 w-full max-w-[286px] items-center justify-around rounded-lg bg-black p-1 text-[12px] text-[#b2b2b2] md:bg-[#171719] md:text-[14px]">
+              {["1D", "1W", "1M", "3M", "1Y", "5Y"].map((range) => (
+                <span
+                  key={range}
+                  onClick={() => setHistoryDate(range)}
+                  className={`cursor-pointer rounded-lg px-2 py-1.5 ${
+                    historyDate === range ? "bg-[#3d3d3d] text-white" : ""
+                  }`}
+                >
+                  {range}
+                </span>
+              ))}
             </div>
           </div>
 
           {/* ================= CHART ================= */}
 
-          <div className="bg-[black] lg:bg-[#171719] w-85.75 h-92.25 p-3 rounded-2xl mt-4 md:w-[680px] lg:w-[1036px]">
-            <div className="flex items-center justify-between mb-2 md:w-[680px] lg:w-[996px]">
-              <p className="text-white md:text-[18px]">
+          <div className="mt-4 box-border w-full min-w-0 max-w-full overflow-hidden rounded-2xl bg-black p-3 lg:bg-[#171719] md:h-[370px] lg:w-[1036px]">
+            {/* Chart Header */}
+
+            <div className="mb-2 flex w-full min-w-0 items-center justify-between gap-2">
+              <p className="shrink-0 text-[13px] text-white md:text-[18px]">
                 {currency.fromSelectedCurrency}/{currency.toSelectedCurrency}
               </p>
 
-              <p className="flex items-center gap-3 text-[#b2b2b2] text-[14px] md:text-[16px]">
-                <span>{last}</span>
+              <p className="flex min-w-0 items-center justify-end gap-1 overflow-hidden text-[10px] text-[#b2b2b2] md:gap-3 md:text-[16px]">
+                <span className="truncate">{last ?? "-"}</span>
 
-                <span>
-                  ·{" "}
-                  {new Date(
-                    historyRate[historyRate.length - 1]?.date,
-                  ).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                  })}
-                </span>
+                {historyRate.length > 0 && (
+                  <>
+                    <span>·</span>
 
-                <span>16:00</span>
+                    <span className="shrink-0">
+                      {new Date(
+                        historyRate[historyRate.length - 1]?.date,
+                      ).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </span>
 
-                <span>CET</span>
+                    <span className="hidden shrink-0 sm:inline">16:00</span>
+
+                    <span className="hidden shrink-0 sm:inline">CET</span>
+                  </>
+                )}
               </p>
             </div>
 
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={historyRate}>
-                <XAxis
-                  tick={{ fill: "#777", fontSize: 12 }}
-                  axisLine={false}
-                  tickLine={false}
-                  dataKey="date"
-                  tickFormatter={(date) =>
-                    new Date(date).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                    })
-                  }
-                />
+            {/* Chart */}
 
-                <YAxis
-                  tick={{ fill: "#777", fontSize: 12 }}
-                  axisLine={false}
-                  tickLine={false}
-                />
+            <div className="h-[300px] w-full min-w-0">
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+                minWidth={0}
+                minHeight={0}
+              >
+                <LineChart
+                  data={historyRate}
+                  margin={{
+                    top: 5,
+                    right: 5,
+                    left: -15,
+                    bottom: 5,
+                  }}
+                >
+                  <XAxis
+                    dataKey="date"
+                    tick={{ fill: "#777", fontSize: 10 }}
+                    axisLine={false}
+                    tickLine={false}
+                    tickFormatter={(date) =>
+                      new Date(date).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      })
+                    }
+                  />
 
-                <CartesianGrid stroke="#2A2A2C" strokeDasharray="3 3" />
+                  <YAxis
+                    tick={{ fill: "#777", fontSize: 10 }}
+                    axisLine={false}
+                    tickLine={false}
+                    width={35}
+                  />
 
-                <Tooltip content={<CustomTooltip />} />
+                  <CartesianGrid stroke="#2A2A2C" strokeDasharray="3 3" />
 
-                <Line
-                  type="monotone"
-                  dataKey="rate"
-                  stroke="#CEF739"
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+                  <Tooltip content={<CustomTooltip />} />
+
+                  <Line
+                    type="monotone"
+                    dataKey="rate"
+                    stroke="#CEF739"
+                    strokeWidth={2}
+                    dot={false}
+                    activeDot={{ r: 4 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </>
       )}

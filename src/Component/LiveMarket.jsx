@@ -1,26 +1,35 @@
 import useLiveMarket from "../hooks/useLiveMarket";
 import CurrencyItem from "./CurrencyItem";
 
+const marketPairs = [
+  ["EUR", "USD"],
+  ["USD", "EUR"],
+  ["USD", "JPY"],
+  ["GBP", "USD"],
+  ["USD", "CHF"],
+  ["EUR", "GBP"],
+  ["AUD", "USD"],
+];
 export default function LiveMarket() {
-  const marketPairs = [
-    ["USD", "JPY"],
-    ["GBP", "USD"],
-    ["USD", "CHF"],
-    ["EUR", "GBP"],
-    ["AUD", "USD"],
-  ];
-
   const currencyLiveMarket = useLiveMarket(marketPairs);
 
-  const result = currencyLiveMarket.map((currency) => {
+  const result = currencyLiveMarket.map((currency, index) => {
     return (
-      <div className="flex h-full shrink-0 items-center border-l-2  border-[#434141] text-[11px] md:text-[15px]">
+      <div
+        key={index}
+        className="flex h-full shrink-0 items-center border-r-2   border-[#434141] text-[11px] md:text-[15px]"
+      >
         <p className="whitespace-nowrap">
           <span className="ml-2 text-[#9d9d9d]">
-            {currency.base}/{currency.quote}{" "}
+            {currency[0]}/{currency[1]}
           </span>
-          <span className="text-white">{currency.rate}</span>
-          <span className="mr-2 text-[#42eb05]"> ▲ +0.04%</span>
+          <span className="text-white ml-2">{currency.currentRate}</span>
+          <span
+            className={`${currency.changePercent > 0 ? "text-[#42eb05]" : "text-[#ff4141]"} mr-2 ml-2 `}
+          >
+            {currency.changePercent > 0 ? "▲" : "▼"}{" "}
+            {currency.changePercent.toFixed(3)}%
+          </span>
         </p>
       </div>
     );
@@ -38,11 +47,6 @@ export default function LiveMarket() {
       </div>
 
       {/* CHANGE */}
-      <div className="shrink-0">
-        <p className="text-[#ff4141] text-[11px] whitespace-nowrap md:text-[15px]">
-          ▼ −0.14%
-        </p>
-      </div>
 
       {result}
     </div>

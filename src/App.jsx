@@ -14,6 +14,8 @@ import { data } from "./data/data.js";
 import "./index.css";
 import useCurrency from "./hooks/useCurrency.js";
 import useAmountInput from "./hooks/useAmountInput.js";
+import DefaultHistory from "./Component/DefaultSection.jsx";
+import DefaultSection from "./Component/DefaultSection.jsx";
 function App() {
   const [selectedOption, setSelectedOption] = useState("history");
   const [selectedCountry] = useState(data);
@@ -25,7 +27,7 @@ function App() {
 
   const sendField = useAmountInput("");
   const receiveField = useAmountInput("");
-
+  
   function handleFavorite(
     senderCurrency,
     receiverCurrency,
@@ -137,24 +139,57 @@ function App() {
           favorited={favorited}
           logged={logged}
         />
-        {selectedOption === "history" && <History currency={currency} />}
-        {selectedOption === "compare" && (
-          <Compare handleFavorite={handleFavorite} favorited={favorited} />
-        )}
-        {selectedOption === "favroites" && (
-          <Favroite
-            favorited={favorited}
-            handleDeleteFavorite={handleDeleteFavorite}
-          />
-        )}
-        {selectedOption === "logs" && (
-          <Log
-            handleAllClearLogged={handleAllClearLogged}
-            logged={logged}
-            setLogged={setLogged}
-            handleDeleteLog={handleDeleteLog}
-          />
-        )}
+        {selectedOption === "history" &&
+          (currency.fromSelectedCurrency === "USD" &&
+          currency.toSelectedCurrency === "AFN" ? (
+            <DefaultSection
+              heading="No chart data available"
+              text="We couldn't load rate history for USD/AFN right now. This usually clears up in a minute."
+            />
+          ) : (
+            <History currency={currency} />
+          ))}
+
+        {selectedOption === "compare" &&
+          (!sendField.value ? (
+            <DefaultSection
+              heading="No comparison available"
+              text="Enter an amount in SEND above to see what your money is worth in other currencies."
+            />
+          ) : (
+            <Compare
+              currency={currency}
+              handleFavorite={handleFavorite}
+              favorited={favorited}
+              senderField={sendField.value}
+            />
+          ))}
+        {selectedOption === "favroites" &&
+          (favorited.length > 0 ? (
+            <Favroite
+              favorited={favorited}
+              handleDeleteFavorite={handleDeleteFavorite}
+            />
+          ) : (
+            <DefaultSection
+              heading="No pinned pairs yet"
+              text="Pin a pair to track its rate here. Tap the star icon on any conversion or comparison row."
+            />
+          ))}
+        {selectedOption === "logs" &&
+          (logged.length > 0 ? (
+            <Log
+              handleAllClearLogged={handleAllClearLogged}
+              logged={logged}
+              setLogged={setLogged}
+              handleDeleteLog={handleDeleteLog}
+            />
+          ) : (
+            <DefaultSection
+              heading="No conversions logged yet"
+              text="Every conversion is recorded here automatically when you tap LOG CONVERSION. Your log is private to this session and this browser."
+            />
+          ))}
       </Main>
       <Footer className="md:hidden" />
     </>

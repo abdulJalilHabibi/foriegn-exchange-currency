@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
-const todayDate = "2026-09-23";
+const todayDate = new Date().toISOString().split("T")[0];
+
 export default function useHistoryRate(
   senderCurrency,
   receiverCurrency,
@@ -15,7 +16,7 @@ export default function useHistoryRate(
       try {
         setIsLoading(true);
         const res = await fetch(
-          `https://api.frankfurter.dev/v2/rates?base=${senderCurrency}&quotes=${receiverCurrency}&from=${historyDate}&to=${todayDate}`,
+          `https://api.frankfurter.dev/v2/rates?base=${senderCurrency}&quotes=${receiverCurrency}&from=${historyDate}&to=${todayDate  }`,
         );
         const data = await res.json();
 

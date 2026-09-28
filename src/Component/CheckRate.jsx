@@ -36,8 +36,6 @@ export default function CheckRate({
   );
 
   
-
-  // sync درست با useEffect به‌جای setState داخل render
   useEffect(() => {
     receiveField.setValue(result || "");
   }, [result]);
@@ -64,7 +62,7 @@ export default function CheckRate({
   );
 
   return (
-    <div className="pt-8 font-jetbrains">
+    <div className="pt-8 font-jetbrains ">
       <h1 className="mb-6 tracking-wider text-white">CHECK THE RATE</h1>
 
       <div>

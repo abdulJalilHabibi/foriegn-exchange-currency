@@ -13,8 +13,18 @@ const compareCurrencies = [
   "JPY",
 ];
 
-export default function Compare({ handleFavorite, favorited }) {
-  const compareResult = useCompareRate(compareCurrencies);
+export default function Compare({
+  senderField,
+  currency,
+  handleFavorite,
+  favorited,
+}) {
+  const compareResult = useCompareRate(
+    currency.fromSelectedCurrency,
+    compareCurrencies,
+  );
+
+  const amount = Number(senderField) || 0;
 
   return (
     <div className="">
@@ -23,7 +33,7 @@ export default function Compare({ handleFavorite, favorited }) {
           <div className="flex items-center gap-3">
             <span className="text-[#9d9d9d]">MULTI-CURRENCY </span>
             <span className="text-white font-bold text-[20px]">
-              1,000 FROM USD
+              {senderField} FROM {currency.fromSelectedCurrency}
             </span>
           </div>
           <div>
@@ -34,21 +44,25 @@ export default function Compare({ handleFavorite, favorited }) {
         </div>
         {/*card div */}
         {compareResult.map((Compare) => {
-          const currency = data.find(
+          const recieverCurrency = data.find(
             (country) => country.currency === Compare.quote,
           );
           const isFavorited = favorited.some(
             (favorite) =>
-              favorite.senderCurrency === "USD" &&
+              favorite.senderCurrency === currency.fromSelectedCurrency &&
               favorite.receiverCurrency === Compare.quote,
           );
+          const convertedAmount = amount * Compare.rate;
           return (
-            <div key={Compare.quote} className="flex items-center justify-between w-[311px] md:w-[680px] lg:w-[996px] hover:border hover:border-[#454547]  h-[70px] mt-4 p-[12px] rounded-[10px] bg-[#202022] text-white ">
+            <div
+              key={Compare.quote}
+              className="flex items-center justify-between w-[311px] md:w-[680px] lg:w-[996px] hover:border hover:border-[#454547]  h-[70px] mt-4 p-[12px] rounded-[10px] bg-[#202022] text-white "
+            >
               <div className="flex items-center gap-3 md:gap-5">
                 <div>
                   <img
                     className="w-[24px] h-[24px] rounded-full"
-                    src={currency.flag}
+                    src={recieverCurrency.flag}
                     alt=""
                   />
                 </div>
@@ -62,15 +76,19 @@ export default function Compare({ handleFavorite, favorited }) {
               <div className="flex items-center gap-2  md:gap-6 ">
                 <div>
                   <p className="text-white text-[20px] font-bold">
-                    {Compare.rate}
+                    {convertedAmount.toFixed(3)}
                   </p>
                   <p className="text-[#dcdcdc] tracking-wider">
-                    @ {(Compare.rate * 1000).toFixed(2)}
+                    @ {(convertedAmount * 1000).toFixed(2)}
                   </p>
                 </div>
                 <div
                   onClick={() =>
-                    handleFavorite("USD", Compare.quote, Compare.rate)
+                    handleFavorite(
+                      currency.fromSelectedCurrency,
+                      Compare.quote,
+                      Compare.rate,
+                    )
                   }
                   className={` flex justify-center cursor-pointer items-center rounded-lg bg-[#2e2e2e] w-[32px] h-[32px] ${isFavorited ? "border-2 border-[#CEF739]" : ""}`}
                 >
