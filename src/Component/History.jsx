@@ -2,18 +2,8 @@ import { useState } from "react";
 
 import useHistoryRate from "../hooks/useHistoryRate";
 
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  CartesianGrid,
-} from "recharts";
-
 import HistoryLoading from "./HistoryLoading";
-import CustomTooltip from "./CustomToolTip";
+import RateChart from "./RateChart";
 
 export default function History({ currency }) {
   const [historyDate, setHistoryDate] = useState("1D");
@@ -178,55 +168,9 @@ export default function History({ currency }) {
             {/* Chart */}
 
             <div className="h-[300px] w-full min-w-0">
-              <ResponsiveContainer
-                width="100%"
-                height="100%"
-                minWidth={0}
-                minHeight={0}
-              >
-                <LineChart
-                  data={historyRate}
-                  margin={{
-                    top: 5,
-                    right: 5,
-                    left: -15,
-                    bottom: 5,
-                  }}
-                >
-                  <XAxis
-                    dataKey="date"
-                    tick={{ fill: "#777", fontSize: 10 }}
-                    axisLine={false}
-                    tickLine={false}
-                    tickFormatter={(date) =>
-                      new Date(date).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                      })
-                    }
-                  />
-
-                  <YAxis
-                    tick={{ fill: "#777", fontSize: 10 }}
-                    axisLine={false}
-                    tickLine={false}
-                    width={35}
-                  />
-
-                  <CartesianGrid stroke="#2A2A2C" strokeDasharray="3 3" />
-
-                  <Tooltip content={<CustomTooltip />} />
-
-                  <Line
-                    type="monotone"
-                    dataKey="rate"
-                    stroke="#CEF739"
-                    strokeWidth={2}
-                    dot={false}
-                    activeDot={{ r: 4 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              {historyRate.length > 0 && (
+                <RateChart historyRate={historyRate} />
+              )}
             </div>
           </div>
         </>

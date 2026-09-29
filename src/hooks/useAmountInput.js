@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import useFocus from "./useFocus";
 
 export default function useAmountInput(initialValue = "") {
   const [value, setValue] = useState(initialValue);
@@ -6,7 +7,7 @@ export default function useAmountInput(initialValue = "") {
   const [inputWidth, setInputWidth] = useState(20);
 
   const textRef = useRef(null);
-
+  const { inputRef, focusInput } = useFocus();
   useEffect(() => {
     if (textRef.current) {
       setInputWidth(textRef.current.getBoundingClientRect().width);
@@ -29,5 +30,7 @@ export default function useAmountInput(initialValue = "") {
     inputWidth,
     textRef,
     handleChange,
+    inputRef,
+    focusInput,
   };
 }

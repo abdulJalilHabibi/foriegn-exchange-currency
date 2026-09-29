@@ -91,7 +91,7 @@ export default function CurrencyDropdown({
                   <div className="mt-1">
                     {popular.map((country) => (
                       <CurrencyItem
-                      onFavorited={onFavorited}
+                        onFavorited={onFavorited}
                         key={country.code}
                         country={country}
                         selectedCurrency={selectedCurrency}

@@ -16,18 +16,19 @@ import useCurrency from "./hooks/useCurrency.js";
 import useAmountInput from "./hooks/useAmountInput.js";
 import DefaultHistory from "./Component/DefaultSection.jsx";
 import DefaultSection from "./Component/DefaultSection.jsx";
+import useLocalStorage from "./hooks/useLocalStorage.js";
 function App() {
   const [selectedOption, setSelectedOption] = useState("history");
   const [selectedCountry] = useState(data);
-  const [logged, setLogged] = useState([]);
 
-  const [favorited, setFavorited] = useState([]);
+  const [logged, setLogged] = useLocalStorage("logged", []);
+  const [favorited, setFavorited] = useLocalStorage("favroite", []);
 
   const currency = useCurrency();
 
   const sendField = useAmountInput("");
   const receiveField = useAmountInput("");
-  
+
   function handleFavorite(
     senderCurrency,
     receiverCurrency,

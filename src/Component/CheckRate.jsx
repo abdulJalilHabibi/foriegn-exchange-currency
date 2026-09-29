@@ -35,7 +35,6 @@ export default function CheckRate({
     sendField.value,
   );
 
-  
   useEffect(() => {
     receiveField.setValue(result || "");
   }, [result]);
@@ -85,9 +84,10 @@ export default function CheckRate({
                       value={sendField.value}
                       onChange={sendField.handleChange}
                       placeholder="0"
+                      ref={sendField.inputRef}
                     />
 
-                    {/* span نامرئی برای اندازه‌گیری عرض عدد */}
+                  
                     <span
                       ref={sendField.textRef}
                       className="pointer-events-none absolute left-0 top-0 -z-10 whitespace-pre text-[20px] font-bold tracking-[1.4px] opacity-0 lg:text-3xl"
@@ -95,7 +95,7 @@ export default function CheckRate({
                       {sendField.value || "0"}
                     </span>
 
-                    {/* border-bottom فقط زیر عدد، فقط موقع hover */}
+                  
                     {sendField.isHovered && (
                       <span
                         className="pointer-events-none absolute bottom-0 left-0 border-b border-[#9d9d9d]"
@@ -157,6 +157,7 @@ export default function CheckRate({
                       value={receiveField.value}
                       readOnly
                       placeholder="0"
+                      ref={receiveField.inputRef}
                     />
 
                     <span
