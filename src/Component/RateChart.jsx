@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
-import CustomTooltip from "./CustomToolTip";
+import CustomTooltip from "./CustomTooltip";
 
 const LINE_COLOR = "#CEF739";
 const MONO_FONT = "ui-monospace, SFMono-Regular, Menlo, monospace";
