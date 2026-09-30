@@ -103,8 +103,7 @@ Add your desktop screenshot here.
 Add your mobile screenshot here.
 
 ## 🔗 Live Demo
-
-[View Live Demo](#)
+(https://foriegn-exchange-currency-mhsx.vercel.app/)
 
 ## 🧠 What I Learned
 
@@ -136,4 +135,4 @@ While building FX Checker, I practiced:
 Computer Science Student & Frontend Developer
 
 * GitHub: [abdulJalilHabibi](https://github.com/abdulJalilHabibi)
-* LinkedIn: [Abdul Jalil Habibi](#)
+* www.linkedin.com/in/abdul-jalil-habibi
