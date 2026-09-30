@@ -94,11 +94,13 @@ Then open the local development URL shown in your terminal.
 
 ## 📸 Screenshots
 
-### Desktop
+<img width="1904" height="946" alt="image" src="https://github.com/user-attachments/assets/3dcb3c9e-7388-4a2b-a4dc-474d7a51e718" />
+
 
 Add your desktop screenshot here.
 
-### Mobile
+<img width="298" height="765" alt="image" src="https://github.com/user-attachments/assets/d35a97c4-8558-403f-8002-de4f37418a05" />
+
 
 Add your mobile screenshot here.
 
@@ -135,4 +137,4 @@ While building FX Checker, I practiced:
 Computer Science Student & Frontend Developer
 
 * GitHub: [abdulJalilHabibi](https://github.com/abdulJalilHabibi)
-* www.linkedin.com/in/abdul-jalil-habibi
+* Linkedin: www.linkedin.com/in/abdul-jalil-habibi
