@@ -4,7 +4,7 @@ import { data } from "../data/data.js";
 
 import { useExchageRate } from "../hooks/useExchangeRate.js";
 import useAmountInput from "../hooks/useAmountInput.js";
-import useSearch from "../hooks/useSearch.js";
+import useSearch from "../hooks/useSearch.js";      
 import DropDown from "./DropDown.jsx";
 import CurrencyDropdown from "./CurrencyDropDown.jsx";
 import useCurrency from "../hooks/useCurrency.js";
@@ -75,7 +75,7 @@ export default function CheckRate({
                 <div className="flex w-full min-w-0 items-center justify-between gap-3">
                   {/* Amount + Hover border-bottom */}
                   <div
-                    className="relative flex min-w-0 flex-1 items-center"
+                    className="relative flex min-w-0 flex-1 items-center ]"
                     onMouseEnter={() => sendField.setIsHovered(true)}
                     onMouseLeave={() => sendField.setIsHovered(false)}
                   >
@@ -87,7 +87,6 @@ export default function CheckRate({
                       ref={sendField.inputRef}
                     />
 
-                  
                     <span
                       ref={sendField.textRef}
                       className="pointer-events-none absolute left-0 top-0 -z-10 whitespace-pre text-[20px] font-bold tracking-[1.4px] opacity-0 lg:text-3xl"
@@ -95,7 +94,6 @@ export default function CheckRate({
                       {sendField.value || "0"}
                     </span>
 
-                  
                     {sendField.isHovered && (
                       <span
                         className="pointer-events-none absolute bottom-0 left-0 border-b border-[#9d9d9d]"
@@ -169,7 +167,7 @@ export default function CheckRate({
 
                     {receiveField.isHovered && (
                       <span
-                        className="pointer-events-none absolute bottom-0 left-0 border-b border-[#9d9d9d]"
+                        className="pointer-events-none absolute bottom-0 left-0 border-b border-[#CEF739]"
                         style={{ width: `${receiveField.inputWidth}px` }}
                       />
                     )}

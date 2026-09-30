@@ -10,7 +10,7 @@ export default function Logo() {
       </div>
 
       <div className="flex items-center gap-1 text-[#9d9d9d] text-[12px] md:text-[18px]">
-        <span>55 CURRENCIES</span>
+        <span>57 CURRENCIES</span>
         <span> · EOD</span>
         <span> · ECB DATA</span>
       </div>

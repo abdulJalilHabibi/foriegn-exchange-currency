@@ -56,7 +56,7 @@ export default function Compare({
           return (
             <div
               key={Compare.quote}
-              className="flex items-center justify-between w-[311px] md:w-[680px] lg:w-[996px] hover:border hover:border-[#454547]  h-[70px] mt-4 p-[12px] rounded-[10px] bg-[#202022] text-white "
+              className="flex items-center justify-between w-[311px] md:w-[680px] lg:w-[996px] hover:border hover:border-[#454547] cursor-pointer  h-[70px] mt-4 p-[12px] rounded-[10px] bg-[#202022] text-white "
             >
               <div className="flex items-center gap-3 md:gap-5">
                 <div>
